@@ -1,0 +1,2 @@
+# istioctl
+istioctl install test
