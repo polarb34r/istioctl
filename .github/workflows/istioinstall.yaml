@@ -15,11 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up PowerShell
-      - name: Set up PowerShell
-        uses: actions/setup-pwsh@v2
-
-      # Step 3: Install Istioctl using PowerShell script
+      # Step 2: Install Istioctl using PowerShell script
       - name: Install Istioctl
         run: pwsh ./scripts/download-istioctl.ps1
         env:
