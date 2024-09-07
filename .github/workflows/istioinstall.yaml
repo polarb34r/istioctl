@@ -42,3 +42,16 @@ jobs:
           
           # Test istioctl again after PATH modification
           istioctl version
+
+
+  istioctl-version-check:
+    runs-on: ubuntu-latest
+    needs: install-istioctl
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Verify Istioctl Version
+        run: |
+          istioctl version
