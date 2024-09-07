@@ -18,12 +18,21 @@ jobs:
           $url = "https://github.com/istio/istio/releases/download/$istio_version/istio-$istio_version-linux-amd64.tar.gz"
           Invoke-WebRequest -Uri $url -OutFile "istio.tar.gz"
           tar -xzf "istio.tar.gz" -C $env:RUNNER_TEMP
+          ls -la
+          pwd
 
-      - name: Add istioctl to PATH
-        shell: pwsh
+
+      - name: Set PATH
         run: |
-          $istioPath = "$env:RUNNER_TEMP/istio-$istio_version/bin"
-          echo "##[add-path]$istioPath"
+          cd $env:RUNNER_TEMP/istio-$istio_version/bin
+          ls -la
+          # echo "export PATH=\$PATH:/usr/local/bin:/your/custom/path" >> $GITHUB_ENV
+        
+#      - name: Add istioctl to PATH
+#        shell: pwsh
+#        run: |
+#          $istioPath = "$env:RUNNER_TEMP/istio-$istio_version/bin"
+#          echo "##[add-path]$istioPath"
 
       - name: Verify istioctl installation
         shell: pwsh
