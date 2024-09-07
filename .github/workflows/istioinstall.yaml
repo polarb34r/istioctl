@@ -72,11 +72,12 @@ jobs:
           ls -la
           cd ./test/istio-1.18.2/bin
           ls -la
+          ./istioctl version
           
       - name: Add istioctl to PATH
         shell: bash
         run: |
-          chmod -R 755 ./test/istio-1.18.2/bin
+          chmod -R 755 ./test
           export PATH=$PWD/test/istio-1.18.2/bin:$PATH
 
       - name: Verify Istioctl Version
