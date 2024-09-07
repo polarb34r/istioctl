@@ -46,7 +46,7 @@ jobs:
       - name: Cache istioctl
         uses: actions/cache@v3
         with:
-          path: ./test/istio-$istio_version/bin
+          path: ./test/istio-1.18.2/bin
           key: istio-1.18.2
 
 
