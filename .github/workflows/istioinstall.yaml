@@ -25,7 +25,7 @@ jobs:
           chmod -R 755 ./test
           cd ./test
           ls -la
-          cd istio-$istio_version
+          cd istio-$istio_version/bin
           ls -la
           istioctl version
           pwd
@@ -33,7 +33,7 @@ jobs:
 
       - name: Set PATH
         run: |
-          echo "export PATH=\$PATH:/usr/local/bin:./test" >> $GITHUB_ENV
+          echo "export PATH=\$PATH:/usr/local/bin:./test/istio-1.18.2/bin" >> $GITHUB_ENV
         
 #      - name: Add istioctl to PATH
 #        shell: pwsh
