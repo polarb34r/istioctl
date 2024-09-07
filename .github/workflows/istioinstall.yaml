@@ -55,11 +55,23 @@ jobs:
     needs: install-istioctl
 
     steps:
+      - name: Check inital 
+        shell: bash
+        run: |
+          pwd
+          ls -la
       - name: Restore istioctl from cache
         uses: actions/cache@v3
         with:
           path: ./test/istio-1.18.2/bin
           key: istio-1.18.2
+      - name: cache restore
+        shell: bash
+        run: |
+          pwd
+          ls -la
+          cd ./test/istio-1.18.2/bin
+          ls -la
           
       - name: Add istioctl to PATH
         shell: bash
