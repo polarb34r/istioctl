@@ -81,4 +81,10 @@ jobs:
           export PATH=$PWD/test/istio-1.18.2/bin:$PATH
           # Test istioctl again after PATH modification
           istioctl version
+
+          echo "$PWD/test/istio-1.18.2/bin" >> $GITHUB_PATH
+
+      - name: Test istioctl version
+        run: |
+          istioctl version
           
