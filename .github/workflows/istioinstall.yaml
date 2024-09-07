@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up PowerShell
-        uses: actions/setup-pwsh@v2
 
       - name: Download istioctl
         shell: pwsh
