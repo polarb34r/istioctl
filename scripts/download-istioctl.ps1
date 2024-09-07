@@ -14,10 +14,13 @@ function Get-DownloadUrl {
     )
 
     if ($IsWindows) {
+        echo "windos"
         return "https://github.com/istio/istio/releases/download/$version/istioctl-$version-win.zip"
     } elseif ($IsMacOS) {
+        echo "macos"
         return "https://github.com/istio/istio/releases/download/$version/istioctl-$version-osx.tar.gz"
     } else {
+        echo "linux"
         return "https://github.com/istio/istio/releases/download/$version/istioctl-$version-linux-amd64.tar.gz"
     }
 }
@@ -118,8 +121,8 @@ function Run-Istioctl {
 }
 
 # Check the OS
-$IsWindows = $PSVersionTable.OS -match "Windows"
-$IsMacOS = $PSVersionTable.OS -match "Darwin"
+# $IsWindows = $PSVersionTable.OS -match "Windows"
+# $IsMacOS = $PSVersionTable.OS -match "Darwin"
 
 # Run the script
 $version = Read-Host "Enter the version of Istioctl"
