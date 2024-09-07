@@ -24,9 +24,9 @@ jobs:
 
       - name: Set PATH
         run: |
-          cd $env:RUNNER_TEMP/istio-$istio_version/bin
+          cd /home/runner/work/istioctl/istioctl
           ls -la
-          # echo "export PATH=\$PATH:/usr/local/bin:/your/custom/path" >> $GITHUB_ENV
+          # echo "export PATH=\$PATH:/usr/local/bin:/home/runner/work/istioctl/istioctl" >> $GITHUB_ENV
         
 #      - name: Add istioctl to PATH
 #        shell: pwsh
