@@ -34,12 +34,11 @@ jobs:
           ls -la
           ./istioctl version
           pwd
+          cd ..
+          export PATH=$PWD/bin:$PATH
+          istioctl version
           
-
-
-      - name: Set PATH
-        run: |
-          echo "export PATH=$PWD/bin:/home/runner/work/istioctl/istioctl/test/istio-1.18.2/bin" >> $GITHUB_ENV
+          
         
 #      - name: Add istioctl to PATH
 #        shell: pwsh
