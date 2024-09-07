@@ -30,6 +30,7 @@ jobs:
           $env:PATH = "${$PWD}:$env:PATH"
 
           # Check if istioctl works by calling it directly
+          echo $PWD
           ./istioctl version
           
 
@@ -37,7 +38,7 @@ jobs:
         shell: bash
         run: |
           echo "Adding istioctl to PATH"
-          export PATH=$PWD/test/istio-$istio_version/bin:$PATH
+          export PATH=$PWD/test/istio-1.18.2/bin:$PATH
           
           # Test istioctl again after PATH modification
           istioctl version
