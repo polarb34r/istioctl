@@ -35,7 +35,8 @@ jobs:
           ./istioctl version
           pwd
           cd ..
-          export PATH=$PWD/bin:$PATH
+          $env:PATH = "$PWD\bin;$env:PATH"
+
           istioctl version
           
           
