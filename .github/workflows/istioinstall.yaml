@@ -25,6 +25,8 @@ jobs:
           chmod -R 755 ./test
           cd ./test
           ls -la
+          cd istio-$istio_version
+          ls -la
           istioctl version
           pwd
 
