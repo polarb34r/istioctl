@@ -27,7 +27,7 @@ jobs:
           ls -la
           
           # Add istioctl directory to the PATH
-          $env:PATH = "$PWD:$env:PATH"
+          $env:PATH = "${$PWD}:$env:PATH"
 
           # Check if istioctl works by calling it directly
           ./istioctl version
