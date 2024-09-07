@@ -1,36 +1,33 @@
-name: Test Istioctl Installation
+name: Install Istioctl
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
-  istioctl-install:
+  install-istioctl:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Set up PowerShell
+        uses: actions/setup-pwsh@v2
 
-      # Step 2: Install Istioctl using PowerShell script
-      - name: Install Istioctl
-        run: pwsh ./scripts/download-istioctl.ps1
-        env:
-          version: 1.19.0 # You can change the version here
+      - name: Download istioctl
+        shell: pwsh
+        run: |
+          $istio_version = "1.18.2"
+          $url = "https://github.com/istio/istio/releases/download/$istio_version/istio-$istio_version-linux-amd64.tar.gz"
+          Invoke-WebRequest -Uri $url -OutFile "istio.tar.gz"
+          tar -xzf "istio.tar.gz" -C $env:RUNNER_TEMP
 
-  istioctl-version-check:
-    runs-on: ubuntu-latest
-    needs: istioctl-install
+      - name: Add istioctl to PATH
+        shell: pwsh
+        run: |
+          $istioPath = "$env:RUNNER_TEMP/istio-$istio_version/bin"
+          echo "##[add-path]$istioPath"
 
-    steps:
-      # Step 4: Checkout the repository again
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # Step 5: Test the installation of Istioctl
-      - name: Verify Istioctl Version
+      - name: Verify istioctl installation
+        shell: pwsh
         run: |
           istioctl version
