@@ -18,7 +18,13 @@ jobs:
           $url = "https://github.com/istio/istio/releases/download/$istio_version/istio-$istio_version-linux-amd64.tar.gz"
           Invoke-WebRequest -Uri $url -OutFile "istio.tar.gz"
           tar -xzf "istio.tar.gz" -C ./test
+          cd ./test
           ls -la
+          cd ..
+          chmod -R 755 ./test
+          cd ./test
+          ls -la
+          istioctl version
           pwd
 
 
