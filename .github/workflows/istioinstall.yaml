@@ -17,6 +17,11 @@ jobs:
           $istio_version = "1.18.2"
           $url = "https://github.com/istio/istio/releases/download/$istio_version/istio-$istio_version-linux-amd64.tar.gz"
           Invoke-WebRequest -Uri $url -OutFile "istio.tar.gz"
+          
+          echo $PWD
+          echo "$PWD/bin"
+          echo "$PWD/test/istio-1.18.2/bin"
+          
           mkdir test
           tar -xzf "istio.tar.gz" -C ./test
           cd ./test
@@ -29,6 +34,7 @@ jobs:
           ls -la
           ./istioctl version
           pwd
+          
 
 
       - name: Set PATH
