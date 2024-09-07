@@ -27,7 +27,7 @@ jobs:
           ls -la
           cd istio-$istio_version/bin
           ls -la
-          istioctl version
+          ./istioctl version
           pwd
 
 
