@@ -19,39 +19,18 @@ jobs:
           Invoke-WebRequest -Uri $url -OutFile "istio.tar.gz"
           
           echo $PWD
-          echo "$PWD/bin"
-          echo "$PWD/test/istio-1.18.2/bin"
           
           mkdir test
           tar -xzf "istio.tar.gz" -C ./test
-          cd ./test
-          ls -la
-          cd ..
           chmod -R 755 ./test
-          cd ./test
+          cd ./test/istio-$istio_version/bin
           ls -la
-          cd istio-$istio_version/bin
-          ls -la
-          ./istioctl version
-          pwd
-          cd ..
-          $env:PATH = "$PWD\bin;$env:PATH"
-
-          istioctl version
           
-          
-        
-#      - name: Add istioctl to PATH
-#        shell: pwsh
-#        run: |
-#          $istioPath = "$env:RUNNER_TEMP/istio-$istio_version/bin"
-#          echo "##[add-path]$istioPath"
+          # Add istioctl directory to the PATH
+          $env:PATH = "$PWD:$env:PATH"
 
-      - name: Verify istioctl installation
-        shell: pwsh
-        run: |
+          # Check if istioctl works by calling it directly
           ./istioctl version
-      - name: Verify istioctl installation
-        shell: pwsh
-        run: |
+          
+          # After updating PATH, test istioctl again without specifying path
           istioctl version
