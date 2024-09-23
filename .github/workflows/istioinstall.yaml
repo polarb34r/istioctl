@@ -34,7 +34,9 @@ jobs:
           tar -xzf "istio.tar.gz" -C ./test
           chmod -R 755 ./test
           cd ./test
-          ls -la
+          #ls -la
+          Get-ChildItem -Force | Format-List
+
           
           # Add istioctl directory to the PATH
           $env:PATH = "${$PWD}:$env:PATH"
