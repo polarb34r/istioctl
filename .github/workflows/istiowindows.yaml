@@ -93,7 +93,10 @@ jobs:
         run: |
           # chmod -R 755 ./test
           $testPath = "$($pwd)\test"
-          Add-Content -Path $env:GITHUB_PATH -Value $testPath
+          #Add-Content -Path $env:GITHUB_PATH -Value $testPath
+         
+            $env:PATH = "$($pwd)\test;$env:PATH"
+            [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH, [System.EnvironmentVariableTarget]::Process)
           # Test istioctl again after PATH modification
           istioctl version
 
