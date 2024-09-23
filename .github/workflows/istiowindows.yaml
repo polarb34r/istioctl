@@ -103,6 +103,7 @@ jobs:
           
 
       - name: Test istioctl version
+        shell: pwsh
         run: |
           istioctl version
           
