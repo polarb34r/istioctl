@@ -41,8 +41,10 @@ jobs:
         shell: pwsh
         run: |
           echo "Adding istioctl to PATH"
-            export PATH=$PWD/test:$PATH
-            echo "$PWD/test" >> $GITHUB_PATH
+            # export PATH=$PWD/test:$PATH
+            $env:PATH = "$($pwd)\test;$env:PATH"
+            [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH, [System.EnvironmentVariableTarget]::Process)
+            # echo "$PWD/test" >> $GITHUB_PATH
             # Test istioctl again after PATH modification
             istioctl version
           
