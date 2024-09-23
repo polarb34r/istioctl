@@ -68,20 +68,6 @@ jobs:
       - name: Add istioctl to PATH
         shell: bash
         run: |
-          $os = if ($Env:RUNNER_OS -eq "Windows") {
-              "win-amd64"
-          } elseif ($Env:RUNNER_ARCH -eq "ARM64") {
-              "linux-arm64"
-          } else {
-              "linux-amd64"
-          }
-          Write-Host "Detected OS: $os"
-          if ($os -eq "linux-amd64"){
-            echo "Adding istioctl to PATH"
-            export PATH=$PWD/test:$PATH
-            # Test istioctl again after PATH modification
-            istioctl version
-          }
           echo "Adding istioctl to PATH"
             export PATH=$PWD/test:$PATH
             # Test istioctl again after PATH modification
