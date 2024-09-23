@@ -97,6 +97,8 @@ jobs:
          
             $env:PATH = "$($pwd)\test;$env:PATH"
             [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH, [System.EnvironmentVariableTarget]::Process)
+            $testPath = "$($pwd)\test"
+            Add-Content -Path $env:GITHUB_PATH -Value $testPath
           # Test istioctl again after PATH modification
           istioctl version
 
