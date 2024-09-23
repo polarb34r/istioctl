@@ -33,7 +33,7 @@ jobs:
           mkdir test
           tar -xzf "istio.tar.gz" -C ./test
           chmod -R 755 ./test
-          cd ./test/istio-$istio_version/bin
+          cd ./test
           ls -la
           
           # Add istioctl directory to the PATH
