@@ -60,7 +60,7 @@ jobs:
             $env:PATH = "${$PWD}:$env:PATH"
             # Check if istioctl works by calling it directly
             echo $PWD
-            istioctl version
+            istioctl.exe version
 
           
           
@@ -82,6 +82,10 @@ jobs:
             # Test istioctl again after PATH modification
             istioctl version
           }
+          echo "Adding istioctl to PATH"
+            export PATH=$PWD/test:$PATH
+            # Test istioctl again after PATH modification
+            istioctl version
           
       - name: Cache istioctl
         uses: actions/cache@v3
