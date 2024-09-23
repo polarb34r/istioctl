@@ -60,7 +60,7 @@ jobs:
             $env:PATH = "${$PWD}:$env:PATH"
             # Check if istioctl works by calling it directly
             echo $PWD
-            istioctl.exe version
+            .\istioctl.exe version
 
           
           
