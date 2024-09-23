@@ -23,37 +23,65 @@ jobs:
               "linux-amd64"
           }
           Write-Host "Detected OS: $os"
+          if ($os -eq "linux-amd64"){
+            # https://github.com/istio/istio/releases/download/1.21.6/istioctl-1.21.6-win-amd64.zip
+            # https://github.com/istio/istio/releases/download/1.21.6/istio-1.21.6-linux-amd64.tar.gz
+            $url = "https://github.com/istio/istio/releases/download/$istio_version/istioctl-$($istio_version)-linux-amd64.tar.gz"
+            Invoke-WebRequest -Uri $url -OutFile "istio.tar.gz"
+            
+            echo $PWD
+            
+            mkdir test
+            tar -xzf "istio.tar.gz" -C ./test
+            chmod -R 755 ./test
+            cd ./test
+            #ls -la
+            Get-ChildItem -Force | Format-List
+            # Add istioctl directory to the PATH
+            $env:PATH = "${$PWD}:$env:PATH"
+            # Check if istioctl works by calling it directly
+            echo $PWD
+            ./istioctl version
+          }
           # https://github.com/istio/istio/releases/download/1.21.6/istioctl-1.21.6-win-amd64.zip
-          # https://github.com/istio/istio/releases/download/1.21.6/istio-1.21.6-linux-amd64.tar.gz
-          $url = "https://github.com/istio/istio/releases/download/$istio_version/istioctl-$($istio_version)-linux-amd64.tar.gz"
-          Invoke-WebRequest -Uri $url -OutFile "istio.tar.gz"
-          
-          echo $PWD
-          
-          mkdir test
-          tar -xzf "istio.tar.gz" -C ./test
-          chmod -R 755 ./test
-          cd ./test
-          #ls -la
-          Get-ChildItem -Force | Format-List
+            # https://github.com/istio/istio/releases/download/1.21.6/istio-1.21.6-linux-amd64.tar.gz
+            $url = "https://github.com/istio/istio/releases/download/$istio_version/istioctl-$($istio_version)-win-amd64.zip"
+            Invoke-WebRequest -Uri $url -OutFile "istio.zip"
+            
+            echo $PWD
+            
+            mkdir test
+            tar -xzf "istio.zip" -C ./test
+            chmod -R 755 ./test
+            cd ./test
+            #ls -la
+            Get-ChildItem -Force | Format-List
+            # Add istioctl directory to the PATH
+            $env:PATH = "${$PWD}:$env:PATH"
+            # Check if istioctl works by calling it directly
+            echo $PWD
+            istioctl version
 
           
-          # Add istioctl directory to the PATH
-          $env:PATH = "${$PWD}:$env:PATH"
-
-          # Check if istioctl works by calling it directly
-          echo $PWD
-          ./istioctl version
           
 
       - name: Add istioctl to PATH
         shell: bash
         run: |
-          echo "Adding istioctl to PATH"
-          export PATH=$PWD/test:$PATH
-          
-          # Test istioctl again after PATH modification
-          istioctl version
+          $os = if ($Env:RUNNER_OS -eq "Windows") {
+              "win-amd64"
+          } elseif ($Env:RUNNER_ARCH -eq "ARM64") {
+              "linux-arm64"
+          } else {
+              "linux-amd64"
+          }
+          Write-Host "Detected OS: $os"
+          if ($os -eq "linux-amd64"){
+            echo "Adding istioctl to PATH"
+            export PATH=$PWD/test:$PATH
+            # Test istioctl again after PATH modification
+            istioctl version
+          }
           
       - name: Cache istioctl
         uses: actions/cache@v3
