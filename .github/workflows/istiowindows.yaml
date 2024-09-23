@@ -72,12 +72,19 @@ jobs:
           path: ./test
           key: istio-1.21.6-win
           
+      - name: cache restore test
+        shell: pwsh
+        run: |
+          pwd
+          Get-ChildItem -Force | Format-List
+          dir
+          
       - name: cache restore
         shell: pwsh
         run: |
           pwd
           Get-ChildItem -Force | Format-List
-          cd ./test
+          cd test
           Get-ChildItem -Force | Format-List
           .\istioctl.exe version
           
