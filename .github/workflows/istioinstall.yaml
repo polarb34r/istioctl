@@ -14,8 +14,18 @@ jobs:
       - name: Download istioctl
         shell: pwsh
         run: |
-          $istio_version = "1.18.2"
-          $url = "https://github.com/istio/istio/releases/download/$istio_version/istio-$istio_version-linux-amd64.tar.gz"
+          $istio_version = "1.21.6"
+          $os = if ($Env:RUNNER_OS -eq "Windows") {
+              "win-amd64"
+          } elseif ($Env:RUNNER_ARCH -eq "ARM64") {
+              "linux-arm64"
+          } else {
+              "linux-amd64"
+          }
+          Write-Host "Detected OS: $os"
+          # https://github.com/istio/istio/releases/download/1.21.6/istioctl-1.21.6-win-amd64.zip
+          # https://github.com/istio/istio/releases/download/1.21.6/istio-1.21.6-linux-amd64.tar.gz
+          $url = "https://github.com/istio/istio/releases/download/$istio_version/istioctl-$($istio_version)-linux-amd64.tar.gz"
           Invoke-WebRequest -Uri $url -OutFile "istio.tar.gz"
           
           echo $PWD
@@ -38,7 +48,7 @@ jobs:
         shell: bash
         run: |
           echo "Adding istioctl to PATH"
-          export PATH=$PWD/test/istio-1.18.2/bin:$PATH
+          export PATH=$PWD/test/istio-1.21.6/bin:$PATH
           
           # Test istioctl again after PATH modification
           istioctl version
@@ -46,8 +56,8 @@ jobs:
       - name: Cache istioctl
         uses: actions/cache@v3
         with:
-          path: ./test/istio-1.18.2/bin
-          key: istio-1.18.2
+          path: ./test/istio-1.21.6/bin
+          key: istio-1.21.6
 
 
   istioctl-version-check:
@@ -63,14 +73,14 @@ jobs:
       - name: Restore istioctl from cache
         uses: actions/cache@v3
         with:
-          path: ./test/istio-1.18.2/bin
-          key: istio-1.18.2
+          path: ./test/istio-1.21.6/bin
+          key: istio-1.21.6
       - name: cache restore
         shell: bash
         run: |
           pwd
           ls -la
-          cd ./test/istio-1.18.2/bin
+          cd ./test/istio-1.21.6/bin
           ls -la
           ./istioctl version
           
@@ -78,11 +88,11 @@ jobs:
         shell: bash
         run: |
           chmod -R 755 ./test
-          export PATH=$PWD/test/istio-1.18.2/bin:$PATH
+          export PATH=$PWD/test/istio-1.21.6/bin:$PATH
           # Test istioctl again after PATH modification
           istioctl version
 
-          echo "$PWD/test/istio-1.18.2/bin" >> $GITHUB_PATH
+          echo "$PWD/test/istio-1.21.6/bin" >> $GITHUB_PATH
 
       - name: Test istioctl version
         run: |
