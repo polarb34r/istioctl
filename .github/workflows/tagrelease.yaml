@@ -1,0 +1,45 @@
+name: Create Tag and Release
+
+on:
+  workflow_dispatch:  # Manual trigger via GitHub Actions UI
+  push:
+    branches:
+      - main  # You can change this to any branch you want to track for releases
+
+jobs:
+  create_tag_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Get current version
+        id: get_version
+        run: |
+          # Replace this logic with your versioning scheme
+          VERSION="v1.0.$(date +%s)"  # Example of a timestamp-based version
+          echo "Version: $VERSION"
+          echo "::set-output name=version::$VERSION"
+
+      - name: Create Git tag
+        run: |
+          git tag ${{ steps.get_version.outputs.version }}
+          git push origin ${{ steps.get_version.outputs.version }}
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          release_name: Release ${{ steps.get_version.outputs.version }}
+          body: "Automatically generated release for version ${{ steps.get_version.outputs.version }}."
+          draft: false
+          prerelease: false
